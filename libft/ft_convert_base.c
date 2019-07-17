@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/25 13:57:56 by ariperez          #+#    #+#             */
-/*   Updated: 2019/03/29 16:35:15 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/05/29 16:22:22 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ unsigned long	to_base_ten(char *nbr, char *base_from)
 	}
 	return (base_ten);
 }
-
-#include <stdio.h>
 
 char			*from_base_ten(unsigned long nbr, char *base_to)
 {

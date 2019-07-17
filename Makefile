@@ -6,7 +6,7 @@
 #    By: ariperez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 14:43:48 by ariperez          #+#    #+#              #
-#    Updated: 2019/04/02 19:37:17 by ariperez         ###   ########.fr        #
+#    Updated: 2019/07/17 15:09:38 by ariperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_NAME=	ft_printf.c parsing.c tools.c print_speci.c
 OBJ_NAME=	$(SRC_NAME:.c=.o)
 LIB_NAME=	ft_strlen.c ft_strcpy.c ft_strcat.c ft_atoi.c \
 			ft_itoa.c ft_putchar.c ft_putstr.c ft_putstr_fd.c \
-			ft_convert_base.c ft_strjoinfree.c ft_strdup.c
+			ft_convert_base.c ft_strjoinfree.c ft_strdup.c ft_bzero.c
 LIB_OBJ	=	$(LIB_NAME:.c=.o)
 
 INC		=	$(addprefix $(INC_DIR)/, $(INC_NAME))
@@ -56,15 +56,20 @@ clean:
 	@echo "\033[1;31mObject files has been deleted.\033[0m"
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(LIB_OBJ) $(OBJ_NAME)
 	@rm -f test
 	@echo "\033[1;31mlibftprintf library has been deleted.\033[0m"
 
 re: fclean all
 
 main:
-	@gcc $(SRC) $(NAME) -o test
+	@gcc $(SRC) $(NAME) main.c -o test
 	@echo "Test main has been created."
+
+debug:
+	@gcc -g $(SRC) $(NAME) -o debug
+	@echo "lldb file has been created."
+	@lldb ./debug
 
 norme:
 	@echo "\033[1;33mNorminette\033[0m"

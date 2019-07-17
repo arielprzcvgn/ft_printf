@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 08:32:28 by ariperez          #+#    #+#             */
-/*   Updated: 2019/04/02 21:48:23 by ariperez         ###   ########.fr       */
+/*   Created: 2018/11/10 14:12:54 by ariperez          #+#    #+#             */
+/*   Updated: 2019/05/28 16:26:09 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int		ft_atoi(const char *str)
+void	*ft_bzero(void *b, size_t len)
 {
-	int		i;
-	int		negative;
-	int		number;
+	size_t			i;
+	unsigned char	*p;
 
+	p = b;
 	i = 0;
-	negative = 1;
-	while ((9 <= *(str + i) && *(str + i) <= 13) || *(str + i) == 32)
-		i++;
-	if (*(str + i) == '+')
-		i++;
-	else if (*(str + i) == '-')
+	while (i < len)
 	{
-		negative = -1;
+		*(p + i) = 0;
 		i++;
 	}
-	number = 0;
-	while ('0' <= *(str + i) && *(str + i) <= '9')
-	{
-		number *= 10;
-		number += (*(str + i) - '0');
-		i++;
-	}
-	return (negative * number);
+	return (b);
 }
