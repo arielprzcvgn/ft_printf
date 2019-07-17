@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 14:09:22 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/17 21:20:08 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/07/17 21:27:33 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,10 @@ int		put_o_u_x(t_printf *p, unsigned long o_u_x)
 	total = p->a.zeros + p->a.str + p->a.space + p->a.sign;
 	while (!(p->a.p & MINUS) && (!(p->a.p & ZERO) || p->a.precision != -1) && p->a.space--)
 		write(1, " ", 1);
-	//if (p->a.p & HASH && p->a.p & HASH0 && !(p->a.p & HASH1))
 	if (p->a.sign == 1)
 		write(1, "0", 1);
-	//else if (p->a.p & HASH && !(p->a.p & HASH0) && p->a.p & HASH1)
 	else if (p->a.sign == 2 && !(p->a.p & HASH0))
 		write(1, "0x", 2);
-	//else if (p->a.p & HASH && p->a.p & HASH0 && p->a.p & HASH1)
 	else if (p->a.sign == 2)
 		write(1, "0X", 2);
 	while (p->a.zeros--)
