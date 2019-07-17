@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:32:50 by ariperez          #+#    #+#             */
-/*   Updated: 2019/06/27 20:32:17 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/07/17 20:47:36 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char				*flags(t_printf *p);
 char				*base(char *nbr);
 char				*chartostring(char c);
 char				*itoa_printf(intmax_t n, t_printf *p);
+char				*uitoa_printf(uintmax_t n, t_printf *p);
 char				*ft_ulltoa(unsigned long long n);
 
 int					speci_c_s(int spec, char *cpy, t_printf *p);

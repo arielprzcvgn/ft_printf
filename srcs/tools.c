@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:30:37 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/12 13:49:11 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/07/17 21:09:07 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,33 @@ char	*itoa_printf(intmax_t n, t_printf *p)
 	while (tmp > 0)
 	{
 		*(number + i) = (n / tmp) + 48;
+		n = n % tmp;
+		tmp /= 10;
+		i++;
+	}
+	number[i] = '\0';
+	return (number);
+}
+
+char    *uitoa_printf(uintmax_t n, t_printf *p)
+{
+	char        *number;
+	uintmax_t    tmp;
+	int         i;
+
+	i = 0;
+	tmp = 1;
+	p->a.sign = (p->a.p & PLUS) ? 2 : (p->a.p & SPACE) ? 1 : 0;
+	if (n == 0 && p->a.precision == 0)
+		return ("");
+	while (tmp <= n / 10 && ++i)
+		tmp *= 10;
+	if ((number = malloc(i + 1)) == NULL)
+		return (NULL);
+	i = 0;
+	while (tmp > 0)
+	{
+		*(number + i) = n / tmp + 48;
 		n = n % tmp;
 		tmp /= 10;
 		i++;
