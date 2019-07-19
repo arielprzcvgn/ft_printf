@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:30:37 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/17 21:09:07 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:16:32 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*itoa_printf(intmax_t n, t_printf *p)
 
 	i = 0;
 	tmp = 1;
-	p->a.sign = (n < 0) ? 3 : (p->a.p & PLUS) ? 2 : (p->a.p & SPACE) ? 1 : 0;
+	p->a.sign = n < 0 ? 3 : (p->a.p & PLUS) ? 2 : (p->a.p & SPACE) ? 1 : 0;
 	if (n == 0 && p->a.precision == 0)
 		return ("");
 	n = ABS(n);
@@ -64,11 +64,11 @@ char	*itoa_printf(intmax_t n, t_printf *p)
 	return (number);
 }
 
-char    *uitoa_printf(uintmax_t n, t_printf *p)
+char	*uitoa_printf(uintmax_t n, t_printf *p)
 {
-	char        *number;
-	uintmax_t    tmp;
-	int         i;
+	char		*number;
+	uintmax_t	tmp;
+	int			i;
 
 	i = 0;
 	tmp = 1;

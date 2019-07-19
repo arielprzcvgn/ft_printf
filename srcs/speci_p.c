@@ -1,53 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_speci.c                                      :+:      :+:    :+:   */
+/*   speci_p.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/24 22:01:40 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/18 18:31:51 by ariperez         ###   ########.fr       */
+/*   Created: 2019/07/19 12:14:48 by ariperez          #+#    #+#             */
+/*   Updated: 2019/07/19 12:52:42 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int		speci_c_s(int spec, char *cpy, t_printf *p)
+int     speci_p(void *pointeur, t_printf *p)
 {
-	char	*s;
-
-	s = ft_strdup(cpy);
-	if (spec == 1)
-	{
-		while (p->a.p & MINUS && (int)ft_strlen(s) < p->a.width)
-			s = ft_strjoinfree(s, " ", 1, 0);
-		while (!(p->a.p & (MINUS | !ZERO)) && (int)ft_strlen(s) < p->a.width)
-			s = ft_strjoinfree(" ", s, 0, 1);
-		while (p->a.p & ZERO && (int)ft_strlen(s) < p->a.width)
-			s = ft_strjoinfree("0", s, 0, 1);
-	}
-	else if (spec == 2)
-	{
-		if (!s)
-			s = ft_strdup("(null)");
-		if (s && p->a.precision != -1 && (int)ft_strlen(s) > p->a.precision)
-			*(s + p->a.precision) = '\0';
-		while (s && (p->a.p & MINUS) && (int)ft_strlen(s) < p->a.width)
-			s = ft_strjoinfree(s, " ", 1, 0);
-		while (s && !(p->a.p & MINUS) && (int)ft_strlen(s) < p->a.width)
-			s = ft_strjoinfree(" ", s, 0, 1);
-	}
-	ft_putstr(s);
-	spec = ft_strlen(s);
-	free(s);
-	return (spec);
-}
-
-int		speci_p(void *pointeur, t_printf *p)
-{
-	char	*cpy;
-	char	*cpycpy;
-	int		total;
+	char    *cpy;
+	char    *cpycpy;
+	int     total;
 
 	cpycpy = ft_ulltoa((unsigned long long)pointeur);
 	cpy = ft_convert_base(cpycpy, "0123456789", "0123456789abcdef");

@@ -6,7 +6,7 @@
 #    By: ariperez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 14:43:48 by ariperez          #+#    #+#              #
-#    Updated: 2019/07/17 16:40:37 by ariperez         ###   ########.fr        #
+#    Updated: 2019/07/19 12:24:13 by ariperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ OBJ_DIR =	./objs
 LIB_DIR	=	./libft
 
 INC_NAME=	libftprintf.h
-SRC_NAME=	ft_printf.c parsing.c tools.c print_speci.c
+SRC_NAME=	ft_printf.c parsing.c tools.c speci_d_i.c speci_o.c speci_s.c \
+			speci_x.c speci_c.c speci_p.c speci_u.c
 OBJ_NAME=	$(SRC_NAME:.c=.o)
 LIB_NAME=	ft_strlen.c ft_strcpy.c ft_strcat.c ft_atoi.c \
 			ft_itoa.c ft_putchar.c ft_putstr.c ft_putstr_fd.c \
@@ -57,7 +58,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME) $(LIB_OBJ) $(OBJ_NAME)
-	@rm -f test
+	@rm -f test debug
 	@echo "\033[1;31mlibftprintf library has been deleted.\033[0m"
 
 re: fclean all
