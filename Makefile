@@ -6,7 +6,7 @@
 #    By: ariperez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 14:43:48 by ariperez          #+#    #+#              #
-#    Updated: 2019/07/19 12:24:13 by ariperez         ###   ########.fr        #
+#    Updated: 2019/08/09 13:43:02 by ariperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC_NAME=	ft_printf.c parsing.c tools.c speci_d_i.c speci_o.c speci_s.c \
 OBJ_NAME=	$(SRC_NAME:.c=.o)
 LIB_NAME=	ft_strlen.c ft_strcpy.c ft_strcat.c ft_atoi.c \
 			ft_itoa.c ft_putchar.c ft_putstr.c ft_putstr_fd.c \
-			ft_convert_base.c ft_strjoinfree.c ft_strdup.c ft_bzero.c
+			ft_conv_base.c ft_strjoinfree.c ft_strdup.c ft_bzero.c
 LIB_OBJ	=	$(LIB_NAME:.c=.o)
 
 INC		=	$(addprefix $(INC_DIR)/, $(INC_NAME))
@@ -64,11 +64,11 @@ fclean: clean
 re: fclean all
 
 main:
-	@gcc $(SRC) $(NAME) main.c -o test
+	@gcc $(NAME) main.c -o test
 	@echo "Test main has been created."
 
 debug:
-	@gcc -g $(SRC) $(NAME) -o debug
+	@gcc -g $(SRC) $(NAME) main.c -o debug
 	@echo "lldb file has been created."
 	@lldb ./debug
 

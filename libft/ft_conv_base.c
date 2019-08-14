@@ -1,66 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convert_base.c                                  :+:      :+:    :+:   */
+/*   ft_conv_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/25 13:57:56 by ariperez          #+#    #+#             */
-/*   Updated: 2019/05/29 16:22:22 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/14 21:01:26 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-unsigned long	to_base_ten(char *nbr, char *base_from)
+unsigned long	to_base_ten(char *base_from, char *nbr)
+{
+	int				i;
+	unsigned long	j;
+	unsigned long	base;
+	unsigned long	base_ten;
+
+	base = ft_strlen(base_from);
+	i = -1;
+	base_ten = 0;
+	while (nbr[++i])
+	{
+		j = 0;
+		while (base_from[j] != nbr[i])
+			j++;
+		base_ten = base_ten * base + j;
+	}
+	return (base_ten);
+}
+
+char			*ft_conv_base(char *nbr, char *base_from, char *base_to)
 {
 	int				i;
 	unsigned long	base;
 	unsigned long	base_ten;
 	unsigned long	number;
-
-	base = ft_strlen(base_from);
-	i = 0;
-	base_ten = 0;
-	while (nbr[i] != '\0')
-	{
-		number = 0;
-		while (base_from[number] != nbr[i])
-			number++;
-		base_ten = base_ten * base + number;
-		i++;
-	}
-	return (base_ten);
-}
-
-char			*from_base_ten(unsigned long nbr, char *base_to)
-{
-	int				i;
-	unsigned long	base;
 	char			*final_base;
-	unsigned long	cmpt;
-	int				j;
 
+	base_ten = to_base_ten(base_from, nbr);
 	base = ft_strlen(base_to);
-	cmpt = nbr;
-	j = 0;
-	while ((cmpt /= base) != 0)
-		j++;
-	final_base = (char*)malloc(sizeof(*final_base) * (j + 2));
-	final_base[j - 1] = '\0';
-	while (j != -1)
+	number = base_ten;
+	i = 0;
+	while ((number /= base) != 0)
+		i++;
+	if ((final_base = malloc(i + 1)) == NULL)
+		return (NULL);
+	final_base[i + 1] = '\0';
+	while (i >= 0)
 	{
-		i = 0;
-		while ((unsigned long)i != nbr % base)
-			i++;
-		final_base[j] = base_to[i];
-		nbr /= base;
-		j--;
+		final_base[i] = base_to[base_ten % base];
+		base_ten /= base;
+		i--;
 	}
 	return (final_base);
-}
-
-char			*ft_convert_base(char *nbr, char *base_from, char *base_to)
-{
-	return (from_base_ten(to_base_ten(nbr, base_from), base_to));
 }

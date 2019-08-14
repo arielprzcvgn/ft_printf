@@ -6,26 +6,43 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:13:40 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/19 12:56:06 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/11 19:33:20 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int     speci_c(char *cpy, t_printf *p)
+int		put_c(t_printf *p, char *s)
 {
-	char    *s;
-	int		spec;
+	int		total;
 
-	s = ft_strdup(cpy);
-	while (p->a.p & MINUS && (int)ft_strlen(s) < p->a.width)
-		s = ft_strjoinfree(s, " ", 1, 0);
-	while (!(p->a.p & (MINUS | !ZERO)) && (int)ft_strlen(s) < p->a.width)
-		s = ft_strjoinfree(" ", s, 0, 1);
-	while (p->a.p & ZERO && (int)ft_strlen(s) < p->a.width)
-		s = ft_strjoinfree("0", s, 0, 1);
-	ft_putstr(s);
-	spec = ft_strlen(s);
+	p->a.zeros = (p->a.p & (ZERO | !MINUS)) ? p->a.width - 1 : 0;
+	p->a.str = 1;
+	p->a.space = (!(p->a.p & ZERO) || p->a.p & MINUS) ? p->a.width - 1 : 0;
+	total = MAX(p->a.zeros + p->a.str + p->a.space, p->a.str);
+	while (!(p->a.p & (MINUS | ZERO)) && 0 < p->a.space--)
+		write(1, " ", 1);
+	while (p->a.p & (!MINUS | ZERO) && 0 < p->a.zeros--)
+		write(1, "0", 1);
+	write(1, s, 1);
+	while (p->a.p & MINUS && 0 < p->a.space--)
+		write(1, " ", 1);
 	free(s);
-	return (spec);
+	return (total);
+}
+
+int		speci_c(t_printf *p, int pc)
+{
+	char	*s;
+	char	str[2];
+
+	if (pc)
+		s = ft_strdup("%");
+	else
+	{
+		str[0] = va_arg(p->ap, int);
+		str[1] = '\0';
+		s = ft_strdup(str);
+	}
+	return (put_c(p, s));
 }

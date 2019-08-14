@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:20:54 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/19 16:49:11 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/11 17:49:49 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ char	*precision(t_printf *p)
 			p->format++;
 		}
 		if (*p->format == '*' && p->format++)
+		{
 			p->a.precision = va_arg(p->ap, int);
+			if (p->a.precision < 0)
+				p->a.precision = -1;
+		}
 	}
 	else
 		p->a.precision = -1;
@@ -60,6 +64,7 @@ char	*precision(t_printf *p)
 
 char	*width(t_printf *p)
 {
+	p->a.width = 0;
 	while ('0' <= *p->format && *p->format <= '9')
 	{
 		p->a.width *= 10;
@@ -67,8 +72,17 @@ char	*width(t_printf *p)
 		p->format++;
 	}
 	if (*p->format == '*' && p->format++)
+	{
 		p->a.width = va_arg(p->ap, int);
-	return (precision(p));
+		if (p->a.width < 0)
+		{
+			p->a.width *= -1;
+			p->a.p |= MINUS;
+		}
+	}
+	if (!(('0' <= *p->format && *p->format <= '9') || *p->format == '*'))
+		return (precision(p));
+	return (width(p));
 }
 
 char	*flags(t_printf *p)

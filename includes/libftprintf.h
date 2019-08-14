@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:32:50 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/19 15:55:14 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/14 21:18:30 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_argument
 	int				width;
 	int				precision;
 	char			*arg;
+	int				neg;
 	int				sign;
 	int				zeros;
 	int				str;
@@ -67,22 +68,20 @@ char				*precision(t_printf *p);
 char				*width(t_printf *p);
 char				*flags(t_printf *p);
 
-char				*base(char *nbr);
-char				*chartostring(char c);
 char				*itoa_printf(intmax_t n, t_printf *p);
-char				*uitoa_printf(uintmax_t n, t_printf *p);
-char				*ft_ulltoa(unsigned long long n);
+char				*uitoa_printf(uintmax_t n, t_printf *p, int b, char *base);
 
 int					put_d_i(t_printf *p);
 int					put_o(t_printf *p, unsigned long o);
 int					put_u(t_printf *p, unsigned long u);
 int					put_x(t_printf *p, unsigned long x);
+int					put_c(t_printf *p, char *s);
 
 int					speci_d_i(t_printf *p);
 int					speci_o(t_printf *p);
 int					speci_u(t_printf *p);
 int					speci_x(t_printf *p);
-int					speci_c(char *cpy, t_printf *p);
+int					speci_c(t_printf *p, int pc);
 int					speci_s(char *cpy, t_printf *p);
 int					speci_p(void *pointeur, t_printf *p);
 
@@ -94,7 +93,7 @@ char				*ft_itoa(int n);
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);
 void				ft_putstr_fd(char const *s, int fd);
-char				*ft_convert_base(char *nbr, char *base_from, char *base_to);
+char				*ft_conv_base(char *nbr, char *base_from, char *base_to);
 char				*ft_strjoinfree(char *s1, char *s2, int frees1, int frees2);
 char				*ft_strdup(char *s1);
 void				*ft_bzero(void *b, size_t len);

@@ -6,15 +6,15 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:14:15 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/19 12:56:19 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/08 14:29:25 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int     speci_s(char *cpy, t_printf *p)
+int		speci_s(char *cpy, t_printf *p)
 {
-	char    *s;
+	char	*s;
 	int		spec;
 
 	s = ft_strdup(cpy);

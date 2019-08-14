@@ -6,35 +6,11 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:30:37 by ariperez          #+#    #+#             */
-/*   Updated: 2019/07/18 18:16:32 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/14 21:20:37 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-
-char	*base(char *nbr)
-{
-	if (nbr[0] == '0')
-	{
-		if (nbr[1] == 'b')
-			return ("01");
-		else if (nbr[1] == 'x')
-			return ("0123456789abcdef");
-		else
-			return ("01234567");
-	}
-	return ("0123456789");
-}
-
-char	*chartostring(char c)
-{
-	char	*string;
-
-	string = malloc(2);
-	*string = c;
-	*(string + 1) = '\0';
-	return (string);
-}
 
 char	*itoa_printf(intmax_t n, t_printf *p)
 {
@@ -44,11 +20,11 @@ char	*itoa_printf(intmax_t n, t_printf *p)
 
 	i = 0;
 	tmp = 1;
-	p->a.sign = n < 0 ? 3 : (p->a.p & PLUS) ? 2 : (p->a.p & SPACE) ? 1 : 0;
+	p->a.neg = n < 0 ? 1 : 0;
 	if (n == 0 && p->a.precision == 0)
-		return ("");
+		return (ft_strdup(""));
 	n = ABS(n);
-	while (tmp * 10 <= n && ++i)
+	while (tmp <= n / 10 && ++i)
 		tmp *= 10;
 	if ((number = malloc(i + 1)) == NULL)
 		return (NULL);
@@ -64,7 +40,7 @@ char	*itoa_printf(intmax_t n, t_printf *p)
 	return (number);
 }
 
-char	*uitoa_printf(uintmax_t n, t_printf *p)
+char	*uitoa_printf(uintmax_t n, t_printf *p, int b, char *base)
 {
 	char		*number;
 	uintmax_t	tmp;
@@ -72,43 +48,19 @@ char	*uitoa_printf(uintmax_t n, t_printf *p)
 
 	i = 0;
 	tmp = 1;
-	p->a.sign = (p->a.p & PLUS) ? 2 : (p->a.p & SPACE) ? 1 : 0;
+	number = NULL;
 	if (n == 0 && p->a.precision == 0)
-		return ("");
-	while (tmp <= n / 10 && ++i)
-		tmp *= 10;
+		return (ft_strdup(""));
+	while (tmp <= n / b && ++i)
+		tmp *= b;
 	if ((number = malloc(i + 1)) == NULL)
 		return (NULL);
 	i = 0;
 	while (tmp > 0)
 	{
-		*(number + i) = n / tmp + 48;
+		number[i++] = base[n / tmp];
 		n = n % tmp;
-		tmp /= 10;
-		i++;
-	}
-	number[i] = '\0';
-	return (number);
-}
-
-char	*ft_ulltoa(unsigned long long n)
-{
-	char				*number;
-	unsigned long long	pow;
-	int					i;
-
-	pow = 1;
-	i = 0;
-	while (pow <= (n / 10) && (i += 1))
-		pow *= 10;
-	if ((number = (char *)malloc(i + 2)) == NULL)
-		return (NULL);
-	i = 0;
-	while (pow > 0)
-	{
-		number[i++] = (n / pow) + 48;
-		n = n % pow;
-		pow /= 10;
+		tmp /= b;
 	}
 	number[i] = '\0';
 	return (number);
