@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 14:09:22 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/14 21:19:36 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/20 15:43:06 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	*specifier(t_printf *p)
 		p->printed += speci_x(p);
 	else if (*p->format == 'X' && (p->a.p |= HASH0))
 		p->printed += speci_x(p);
+	else if (*p->format == 'f')
+		p->printed += speci_f(p);
 	else if (*p->format == 'c')
 		p->printed += speci_c(p, 0);
 	else if (*p->format == 's')
@@ -32,6 +34,8 @@ char	*specifier(t_printf *p)
 		p->printed += speci_p(va_arg(p->ap, void*), p);
 	else if (*p->format == '%')
 		p->printed += speci_c(p, 1);
+	else
+		return (p->format - 1);
 	return (p->format);
 }
 

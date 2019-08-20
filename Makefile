@@ -6,7 +6,7 @@
 #    By: ariperez <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 14:43:48 by ariperez          #+#    #+#              #
-#    Updated: 2019/08/09 13:43:02 by ariperez         ###   ########.fr        #
+#    Updated: 2019/08/18 15:07:57 by ariperez         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ LIB_DIR	=	./libft
 
 INC_NAME=	libftprintf.h
 SRC_NAME=	ft_printf.c parsing.c tools.c speci_d_i.c speci_o.c speci_s.c \
-			speci_x.c speci_c.c speci_p.c speci_u.c
+			speci_x.c speci_c.c speci_p.c speci_u.c speci_f.c
 OBJ_NAME=	$(SRC_NAME:.c=.o)
-LIB_NAME=	ft_strlen.c ft_strcpy.c ft_strcat.c ft_atoi.c \
+LIB_NAME=	ft_strlen.c ft_strcpy.c ft_strcat.c ft_atoi.c ft_power.c \
 			ft_itoa.c ft_putchar.c ft_putstr.c ft_putstr_fd.c \
 			ft_conv_base.c ft_strjoinfree.c ft_strdup.c ft_bzero.c
 LIB_OBJ	=	$(LIB_NAME:.c=.o)

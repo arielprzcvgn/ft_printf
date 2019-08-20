@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/08 18:39:21 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/20 16:21:13 by ariperez         ###   ########.fr       */
+/*   Created: 2018/11/25 13:55:34 by ariperez          #+#    #+#             */
+/*   Updated: 2019/08/18 15:08:37 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/libftprintf.h"
-#include <limits.h>
-#include <stdio.h>
-
-int		main(void)
+int		ft_power(int nb, int power)
 {
-	ft_printf("\n%i     Ft_printf\n", ft_printf("%.f", 120.));
-	printf("\n%i        Original\n", printf("%.f", 120.));
+	if (power < 0)
+		return (0);
+	else if (power == 0)
+		return (1);
+	else
+		return (nb * ft_power(nb, power - 1));
 }

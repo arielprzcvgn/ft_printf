@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:20:54 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/11 17:49:49 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/18 20:57:02 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*length(t_printf *p)
 	else if (*p->format == 'L' && p->format++)
 		p->a.p |= LLL;
 	else if (*p->format == '\0')
-		return (NULL);
+		return (p->format - 1);
 	return (specifier(p));
 }
 

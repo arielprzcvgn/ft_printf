@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:32:50 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/14 21:18:30 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/08/20 16:24:45 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,20 @@ char				*flags(t_printf *p);
 
 char				*itoa_printf(intmax_t n, t_printf *p);
 char				*uitoa_printf(uintmax_t n, t_printf *p, int b, char *base);
+char				*ftoa_printf(long double n, t_printf *p);
 
 int					put_d_i(t_printf *p);
 int					put_o(t_printf *p, unsigned long o);
 int					put_u(t_printf *p, unsigned long u);
 int					put_x(t_printf *p, unsigned long x);
+int					put_f(t_printf *p);
 int					put_c(t_printf *p, char *s);
 
 int					speci_d_i(t_printf *p);
 int					speci_o(t_printf *p);
 int					speci_u(t_printf *p);
 int					speci_x(t_printf *p);
+int					speci_f(t_printf *p);
 int					speci_c(t_printf *p, int pc);
 int					speci_s(char *cpy, t_printf *p);
 int					speci_p(void *pointeur, t_printf *p);
@@ -97,5 +100,6 @@ char				*ft_conv_base(char *nbr, char *base_from, char *base_to);
 char				*ft_strjoinfree(char *s1, char *s2, int frees1, int frees2);
 char				*ft_strdup(char *s1);
 void				*ft_bzero(void *b, size_t len);
+int					ft_power(int nb, int power);
 
 #endif
