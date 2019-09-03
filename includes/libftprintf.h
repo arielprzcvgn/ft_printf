@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:32:50 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/20 16:24:45 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 21:41:43 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define ABS(a)			(a < 0) ? -a : a
 # define BOOL(a)		(a > 0) ? 1 : 0
 
+# define BUFF_SIZE		64
+
 # define MINUS			(1 << 0)
 # define ZERO			(1 << 1)
 # define PLUS			(1 << 2)
@@ -30,8 +32,8 @@
 # define HASH0			(1 << 5)
 # define WIDTH			(1 << 6)
 # define PRECI			(1 << 7)
-# define HH				(1 << 8)
-# define H				(1 << 9)
+# define H				(1 << 8)
+# define HH				(1 << 9)
 # define L				(1 << 10)
 # define LL				(1 << 11)
 # define J				(1 << 12)
@@ -55,6 +57,8 @@ typedef struct		s_printf
 {
 	char			*format;
 	int				printed;
+	char			*buffer;
+	int				c;
 	va_list			ap;
 	t_argument		a;
 }					t_printf;
@@ -62,15 +66,14 @@ typedef struct		s_printf
 int					ft_printf(const char *format, ...);
 char				*specifier(t_printf *p);
 
-char				*specifier(t_printf *p);
-char				*length(t_printf *p);
-char				*precision(t_printf *p);
-char				*width(t_printf *p);
-char				*flags(t_printf *p);
+char				*parse(t_printf *p);
+void				precision(t_printf *p);
+void				width(t_printf *p);
 
-char				*itoa_printf(intmax_t n, t_printf *p);
+int					itoa_printf(intmax_t n, t_printf *p);
 char				*uitoa_printf(uintmax_t n, t_printf *p, int b, char *base);
-char				*ftoa_printf(long double n, t_printf *p);
+char				*ft_ulltoa(unsigned long long n);
+int					ftoa_printf(long double n, t_printf *p);
 
 int					put_d_i(t_printf *p);
 int					put_o(t_printf *p, unsigned long o);
@@ -99,7 +102,10 @@ void				ft_putstr_fd(char const *s, int fd);
 char				*ft_conv_base(char *nbr, char *base_from, char *base_to);
 char				*ft_strjoinfree(char *s1, char *s2, int frees1, int frees2);
 char				*ft_strdup(char *s1);
-void				*ft_bzero(void *b, size_t len);
 int					ft_power(int nb, int power);
+char				*ft_strnew(size_t size);
+void				*ft_memset(void *b, int c, size_t len);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
+void				*ft_memmove(void *dst, const void *src, size_t n);
 
 #endif

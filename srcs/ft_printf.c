@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/10 14:09:22 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/20 15:43:06 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 22:18:34 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*specifier(t_printf *p)
 {
+	('A' <= *p->format && *p->format < 'X') ? p->a.p |= L : 0;
 	if (*p->format == 'd' || *p->format == 'i' || *p->format == 'D')
 		p->printed += speci_d_i(p);
 	else if (*p->format == 'u' || *p->format == 'U')
@@ -43,13 +44,15 @@ int		ft_printf(const char *format, ...)
 {
 	t_printf	p;
 
-	ft_bzero(&p, sizeof(p));
+	ft_memset(&p, 0, sizeof(p));
+	if ((p.buffer = ft_strnew(BUFF_SIZE + 1)) == NULL)
+		return (-1);
 	p.format = (char*)format;
 	va_start(p.ap, format);
 	while (*p.format)
 	{
 		if (*p.format == '%' && *(p.format + 1) && p.format++)
-			p.format = flags(&p) + 1;
+			p.format = parse(&p) + 1;
 		else if (*p.format == '%' && *(p.format + 1) == '\0')
 			p.format++;
 		else if (*p.format)
@@ -58,8 +61,9 @@ int		ft_printf(const char *format, ...)
 			p.printed++;
 			p.format++;
 		}
-		ft_bzero(&p.a, sizeof(p.a));
+		ft_memset(&p.a, 0, sizeof(p.a));
 	}
 	va_end(p.ap);
+	free(p.buffer);
 	return (p.printed);
 }

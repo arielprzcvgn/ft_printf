@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 18:39:21 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/20 16:21:13 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 22:09:20 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 
 int		main(void)
 {
-	ft_printf("\n%i     Ft_printf\n", ft_printf("%.f", 120.));
-	printf("\n%i        Original\n", printf("%.f", 120.));
+	ft_printf("\n%i		Ft_printf\n", ft_printf("%-2lU", 159118294924916358));
+	printf("\n%i			Original\n", printf("%-2U", 159118294924916358));
 }

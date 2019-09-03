@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:12:32 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/14 21:15:47 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 21:51:51 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ int		speci_x(t_printf *p)
 	unsigned long long	x;
 
 	x = 0;
-	if (p->a.p & HH)
-		x = (unsigned char)(va_arg(p->ap, unsigned int));
-	else if (p->a.p & H)
-		x = (unsigned short)(va_arg(p->ap, unsigned int));
-	else if (p->a.p & L)
-		x = (unsigned long)(va_arg(p->ap, unsigned long));
-	else if (p->a.p & LL)
-		x = (unsigned long long)(va_arg(p->ap, unsigned long long));
+	if (p->a.p & Z)
+		x = (size_t)(va_arg(p->ap, size_t));
 	else if (p->a.p & J)
 		x = (uintmax_t)(va_arg(p->ap, uintmax_t));
-	else if (p->a.p & Z)
-		x = (size_t)(va_arg(p->ap, size_t));
+	else if (p->a.p & LL)
+		x = (unsigned long long)(va_arg(p->ap, unsigned long long));
+	else if (p->a.p & L)
+		x = (unsigned long)(va_arg(p->ap, unsigned long));
+	else if (p->a.p & H)
+		x = (unsigned short)(va_arg(p->ap, unsigned int));
+	else if (p->a.p & HH)
+		x = (unsigned char)(va_arg(p->ap, unsigned int));
 	else
 		x = (unsigned int)(va_arg(p->ap, unsigned int));
 	if (!(p->a.p & HASH0))

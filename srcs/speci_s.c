@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:14:15 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/08 14:29:25 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 22:07:37 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		speci_s(char *cpy, t_printf *p)
 	while (s && (p->a.p & MINUS) && (int)ft_strlen(s) < p->a.width)
 		s = ft_strjoinfree(s, " ", 1, 0);
 	while (s && !(p->a.p & MINUS) && (int)ft_strlen(s) < p->a.width)
-		s = ft_strjoinfree(" ", s, 0, 1);
+		s = ft_strjoinfree((p->a.p & ZERO ? "0" : " "), s, 0, 1);
 	ft_putstr(s);
 	spec = ft_strlen(s);
 	free(s);

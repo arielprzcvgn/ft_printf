@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:12:02 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/14 21:16:24 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 21:50:30 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ int		speci_u(t_printf *p)
 	unsigned long long	u;
 
 	u = 0;
-	if (p->a.p & HH)
-		u = (unsigned char)(va_arg(p->ap, unsigned int));
-	else if (p->a.p & H)
-		u = (unsigned short)(va_arg(p->ap, unsigned int));
-	else if (p->a.p & L)
-		u = (unsigned long)(va_arg(p->ap, unsigned long));
-	else if (p->a.p & LL)
-		u = (unsigned long long)(va_arg(p->ap, unsigned long long));
+	if (p->a.p & Z)
+		u = (size_t)(va_arg(p->ap, size_t));
 	else if (p->a.p & J)
 		u = (uintmax_t)(va_arg(p->ap, uintmax_t));
-	else if (p->a.p & Z)
-		u = (size_t)(va_arg(p->ap, size_t));
+	else if (p->a.p & LL)
+		u = (unsigned long long)(va_arg(p->ap, unsigned long long));
+	else if (p->a.p & L)
+		u = (unsigned long)(va_arg(p->ap, unsigned long));
+	else if (p->a.p & H)
+		u = (unsigned short)(va_arg(p->ap, unsigned int));
+	else if (p->a.p & HH)
+		u = (unsigned char)(va_arg(p->ap, unsigned int));
 	else
 		u = (unsigned int)(va_arg(p->ap, unsigned int));
 	p->a.arg = uitoa_printf(u, p, 10, "0123456789");

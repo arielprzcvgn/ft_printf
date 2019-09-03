@@ -6,38 +6,26 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:15:24 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/20 16:24:07 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/01 22:28:59 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-int		put_f(t_printf *p)
+double	arrondi(long double n, t_printf *p)
 {
-	int		total;
+	long double i;
+	long double arr;
 
-	p->a.sign = (p->a.p & PLUS || p->a.p & SPACE || p->a.neg == 1) ? 1 : 0;
-	p->a.zeros = MAX(p->a.precision - (int)ft_strlen(p->a.arg), 0);
-	p->a.str = (int)ft_strlen(p->a.arg);
-	p->a.space = MAX(p->a.width - p->a.str - p->a.zeros - p->a.sign, 0);
-	total = p->a.sign + p->a.zeros + p->a.str + p->a.space;
-	while (!(p->a.p & MINUS) && !(p->a.p & ZERO) && 0 < p->a.space--)
-		write(1, " ", 1);
-	if (p->a.neg == 1)
-		write(1, "-", 1);
-	else if (p->a.p & PLUS)
-		write(1, "+", 1);
-	else if (p->a.p & SPACE)
-		write(1, " ", 1);
-	while (p->a.zeros--)
-		write(1, "0", 1);
-	while (p->a.p & ZERO && !(p->a.p & MINUS) && 0 < p->a.space--)
-		write(1, "0", 1);
-	write(1, p->a.arg, ft_strlen(p->a.arg));
-	while (p->a.p & MINUS && 0 < p->a.space--)
-		write(1, " ", 1);
-	free(p->a.arg);
-	return (total);
+	i = 0;
+	arr = 1.0;
+	while (i++ < p->a.precision)
+		n = (n * 10) - (int)(n * 10);
+	while ((n < 0 ? -1 : 1) * n * 10 >= 5 && --i)
+		arr /= 10.0;
+	if ((n < 0 ? -1 : 1) * n * 10 < 5)
+		return (0.0);
+	return ((n < 0 ? -1 : 1) * arr);
 }
 
 int		speci_f(t_printf *p)
@@ -51,6 +39,47 @@ int		speci_f(t_printf *p)
 		f = (double)(va_arg(p->ap, double));
 	if (p->a.precision == -1)
 		p->a.precision = 6;
-	p->a.arg = ftoa_printf(f, p);
-	return (put_f(p));
+	if (f == f)
+		p->a.str = ftoa_printf(f, p);
+	else
+		ft_memcpy(p->buffer + p->c, "nan", (p->a.str = 3));
+	p->a.space = MAX(p->a.width - p->a.str, 0);
+	if (p->a.p & MINUS)
+		ft_memset(p->buffer + p->c + p->a.str, ' ', p->a.space);
+	else
+	{
+		ft_memmove(p->buffer + p->c + p->a.space, p->buffer + p->c, p->a.str);
+		(p->a.p & ZERO && f == f) ? ft_memset(p->buffer + p->c + p->a.sign, '0',
+				p->a.space) : ft_memset(p->buffer + p->c, ' ', p->a.space);
+	}
+	write(1, p->buffer, ft_strlen(p->buffer));
+	return (p->a.str + p->a.space);
+}
+
+int		ftoa_printf(long double n, t_printf *p)
+{
+	int		i;
+	char	*number;
+
+	i = (p->a.p & PLUS) ? '+' : ' ';
+	i = (n < 0) ? '-' : i;
+	p->a.sign = (p->a.p & PLUS || p->a.p & SPACE || n < 0) ? 1 : 0;
+	ft_memset(p->buffer + p->c, i, p->a.sign);
+	number = ft_ulltoa((unsigned long long)ABS(n));
+	i = p->a.sign + ft_strlen(number);
+	ft_memcpy(p->buffer + p->c + p->a.sign, number, i - p->a.sign);
+	n += (n < 0 ? 1 : -1) * (long double)(unsigned long)(ABS(n));
+	n += (p->a.precision > 10) ? 0 : arrondi(n, p);
+	if (p->a.p & HASH || p->a.precision > 0)
+		p->buffer[p->c + i++] = '.';
+	while (p->a.precision--)
+	{
+		n *= 10.0;
+		n += (p->a.precision == 10) ? arrondi(n, p) : 0;
+		p->buffer[p->c + i++] = (((n < 0) ? -1 : 1) * (int)n) + 48;
+		n -= (int)n;
+	}
+	p->buffer[p->c + i] = '\0';
+	free(number);
+	return (i);
 }

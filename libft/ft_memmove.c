@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 13:28:15 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/26 18:00:20 by ariperez         ###   ########.fr       */
+/*   Created: 2018/11/10 17:22:23 by ariperez          #+#    #+#             */
+/*   Updated: 2019/08/27 15:14:08 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int		i;
+	size_t		i;
+	char		*d;
+	const char	*s;
 
-	i = 0;
-	while (*(src + i) != '\0')
+	d = dst;
+	s = src;
+	i = -1;
+	if (d < s)
 	{
-		*(dst + i) = (char)*(src + i);
-		i++;
+		while (++i < len)
+			*(d + i) = *(s + i);
 	}
-	*(dst + i) = '\0';
+	else if (s < d)
+	{
+		while (++i < len)
+			*(d + len - i - 1) = *(s + len - i - 1);
+	}
 	return (dst);
 }

@@ -6,63 +6,31 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:20:54 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/18 20:57:02 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 21:43:25 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-char	*length(t_printf *p)
+void	precision(t_printf *p)
 {
-	if (*p->format == 'h' && p->format++)
+	p->format++;
+	p->a.precision = 0;
+	while ('0' <= *p->format && *p->format <= '9')
 	{
-		if (*p->format == 'h' && p->format++)
-			p->a.p |= HH;
-		else
-			p->a.p |= H;
+		p->a.precision *= 10;
+		p->a.precision += *p->format - 48;
+		p->format++;
 	}
-	else if (*p->format == 'l' && p->format++)
+	if (*p->format == '*' && p->format++)
 	{
-		if (*p->format == 'l' && p->format++)
-			p->a.p |= LL;
-		else
-			p->a.p |= L;
+		p->a.precision = va_arg(p->ap, int);
+		if (p->a.precision < 0)
+			p->a.precision = -1;
 	}
-	else if (*p->format == 'j' && p->format++)
-		p->a.p |= J;
-	else if (*p->format == 'z' && p->format++)
-		p->a.p |= Z;
-	else if (*p->format == 'L' && p->format++)
-		p->a.p |= LLL;
-	else if (*p->format == '\0')
-		return (p->format - 1);
-	return (specifier(p));
 }
 
-char	*precision(t_printf *p)
-{
-	if (*p->format == '.' && p->format++)
-	{
-		p->a.precision = 0;
-		while ('0' <= *p->format && *p->format <= '9')
-		{
-			p->a.precision *= 10;
-			p->a.precision += *p->format - 48;
-			p->format++;
-		}
-		if (*p->format == '*' && p->format++)
-		{
-			p->a.precision = va_arg(p->ap, int);
-			if (p->a.precision < 0)
-				p->a.precision = -1;
-		}
-	}
-	else
-		p->a.precision = -1;
-	return (length(p));
-}
-
-char	*width(t_printf *p)
+void	width(t_printf *p)
 {
 	p->a.width = 0;
 	while ('0' <= *p->format && *p->format <= '9')
@@ -80,24 +48,41 @@ char	*width(t_printf *p)
 			p->a.p |= MINUS;
 		}
 	}
-	if (!(('0' <= *p->format && *p->format <= '9') || *p->format == '*'))
-		return (precision(p));
-	return (width(p));
 }
 
-char	*flags(t_printf *p)
+int		ft_strchrpos(const char *s, int c)
 {
-	if (*p->format == '-' && p->format++)
-		p->a.p |= MINUS;
-	else if (*p->format == '0' && p->format++)
-		p->a.p |= ZERO;
-	else if (*p->format == '+' && p->format++)
-		p->a.p |= PLUS;
-	else if (*p->format == ' ' && p->format++)
-		p->a.p |= SPACE;
-	else if (*p->format == '#' && p->format++)
-		p->a.p |= HASH;
-	else
-		return (width(p));
-	return (flags(p));
+	int		i;
+
+	i = -1;
+	while (s[++i] != '\0')
+	{
+		if (s[i] == c)
+			return (i);
+	}
+	return (-1);
+}
+
+char	*parse(t_printf *p)
+{
+	int		i;
+
+	p->a.precision = -1;
+	while ((i = ft_strchrpos("-0+ ####hhlljzL.123456789*", *p->format)) > -1
+			&& *p->format)
+	{
+		if (*p->format == 48 && 48 < *(p->format - 1) && *(p->format - 1) <= 57)
+			i = -1;
+		else if (*p->format == '.')
+			precision(p);
+		else if (15 <= i)
+			width(p);
+		else if (*p->format == 'l' && *(p->format + 1) == 'l' && (i++))
+			p->format++;
+		else if (*p->format == 'h' && *(p->format + 1) == 'h' && (i++))
+			p->format++;
+		if (0 <= i && i <= 14 && (p->a.p |= 1 << i))
+			p->format++;
+	}
+	return (specifier(p));
 }

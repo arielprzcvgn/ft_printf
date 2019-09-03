@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/14 13:28:15 by ariperez          #+#    #+#             */
-/*   Updated: 2019/08/26 18:00:20 by ariperez         ###   ########.fr       */
+/*   Created: 2018/11/10 14:36:34 by ariperez          #+#    #+#             */
+/*   Updated: 2019/08/27 14:17:19 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-char	*ft_strcpy(char *dst, const char *src)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int		i;
+	size_t		i;
+	char		*d;
+	char		*s;
 
 	i = 0;
-	while (*(src + i) != '\0')
+	d = (char*)dst;
+	s = (char*)src;
+	while (i < n)
 	{
-		*(dst + i) = (char)*(src + i);
+		*(d + i) = *(s + i);
 		i++;
 	}
-	*(dst + i) = '\0';
 	return (dst);
 }
