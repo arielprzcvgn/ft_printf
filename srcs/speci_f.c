@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:15:24 by ariperez          #+#    #+#             */
-/*   Updated: 2019/09/01 22:28:59 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 23:33:26 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		speci_f(t_printf *p)
 		p->a.str = ftoa_printf(f, p);
 	else
 		ft_memcpy(p->buffer + p->c, "nan", (p->a.str = 3));
+	p->a.p & APOS ? apostrophe(p) : 0;
 	p->a.space = MAX(p->a.width - p->a.str, 0);
 	if (p->a.p & MINUS)
 		ft_memset(p->buffer + p->c + p->a.str, ' ', p->a.space);

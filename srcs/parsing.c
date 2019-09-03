@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:20:54 by ariperez          #+#    #+#             */
-/*   Updated: 2019/09/03 22:45:12 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 22:55:50 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*parse(t_printf *p)
 	int		i;
 
 	p->a.precision = -1;
-	while ((i = ft_strchrpos("-0+ ####hhlljzL.123456789*", *p->format)) > -1
+	while ((i = ft_strchrpos("-0+ ##'#hhlljzL.123456789*", *p->format)) > -1
 			&& *p->format)
 	{
 		if (*p->format == 48 && 48 < *(p->format - 1) && *(p->format - 1) <= 57)

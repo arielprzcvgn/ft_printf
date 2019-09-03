@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:07:57 by ariperez          #+#    #+#             */
-/*   Updated: 2019/09/03 22:11:27 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 23:21:12 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int		speci_d_i(t_printf *p)
 	else
 		d_i = (int)(va_arg(p->ap, int));
 	p->a.str = itoa_printf(d_i, p);
+	p->a.p & APOS ? apostrophe(p) : 0;
 	p->a.zeros = MAX(p->a.precision - p->a.str + p->a.sign, 0);
 	p->a.space = MAX(p->a.width - p->a.str - p->a.zeros, 0);
 	return (put_d_i(p));

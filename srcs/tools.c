@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 21:30:37 by ariperez          #+#    #+#             */
-/*   Updated: 2019/09/01 23:55:37 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 23:33:23 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,27 @@ char	*ft_ulltoa(unsigned long long n)
 	}
 	number[i] = '\0';
 	return (number);
+}
+
+void	apostrophe(t_printf *p)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (p->buffer[i] != '\0' && p->buffer[i] != '.')
+		i++;
+	j = i;
+	i++;
+	while (--i)
+	{
+		if ((j - i + 1) % 4 == 0 && '0' <= p->buffer[i - 1] &&
+				p->buffer[i - 1] <= '9')
+		{
+			ft_memmove(p->buffer + i + 1, p->buffer + i, p->a.str - i);
+			ft_memset(p->buffer + i, TROPHY, 1);
+			p->a.str++;
+			j++;
+		}
+	}
 }

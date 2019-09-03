@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:12:02 by ariperez          #+#    #+#             */
-/*   Updated: 2019/09/03 21:50:30 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 23:18:09 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		put_u(t_printf *p, unsigned long u)
 
 	p->a.sign = u - u;
 	p->a.zeros = MAX(p->a.precision - (int)ft_strlen(p->a.arg), 0);
-	p->a.str = (int)ft_strlen(p->a.arg);
 	p->a.space = MAX(p->a.width - p->a.str - p->a.zeros - p->a.sign, 0);
 	total = p->a.zeros + p->a.str + p->a.space + p->a.sign;
 	while (!(p->a.p & MINUS) &&
@@ -55,5 +54,6 @@ int		speci_u(t_printf *p)
 	else
 		u = (unsigned int)(va_arg(p->ap, unsigned int));
 	p->a.arg = uitoa_printf(u, p, 10, "0123456789");
+	p->a.str = (int)ft_strlen(p->a.arg);
 	return (put_u(p, u));
 }

@@ -6,7 +6,7 @@
 /*   By: ariperez <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 11:32:50 by ariperez          #+#    #+#             */
-/*   Updated: 2019/09/03 21:41:43 by ariperez         ###   ########.fr       */
+/*   Updated: 2019/09/03 23:09:31 by ariperez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define BOOL(a)		(a > 0) ? 1 : 0
 
 # define BUFF_SIZE		64
+# define TROPHY			' '
 
 # define MINUS			(1 << 0)
 # define ZERO			(1 << 1)
@@ -30,7 +31,7 @@
 # define SPACE			(1 << 3)
 # define HASH			(1 << 4)
 # define HASH0			(1 << 5)
-# define WIDTH			(1 << 6)
+# define APOS			(1 << 6)
 # define PRECI			(1 << 7)
 # define H				(1 << 8)
 # define HH				(1 << 9)
@@ -74,6 +75,7 @@ int					itoa_printf(intmax_t n, t_printf *p);
 char				*uitoa_printf(uintmax_t n, t_printf *p, int b, char *base);
 char				*ft_ulltoa(unsigned long long n);
 int					ftoa_printf(long double n, t_printf *p);
+void				apostrophe(t_printf *p);
 
 int					put_d_i(t_printf *p);
 int					put_o(t_printf *p, unsigned long o);
